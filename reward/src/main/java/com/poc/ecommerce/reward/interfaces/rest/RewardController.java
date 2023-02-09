@@ -1,11 +1,21 @@
 package com.poc.ecommerce.reward.interfaces.rest;
 
+import com.poc.ecommerce.reward.interfaces.rest.dto.RewardSendResource;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("/reward")
 public class RewardController {
 
-    public void rewardSend() {
+    @PostMapping("/reward-send")
+    public ResponseEntity<Void> rewardSend(@RequestBody RewardSendResource rewardSendResource) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .build();
     }
 
     public void historyInquiry() {

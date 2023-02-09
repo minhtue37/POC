@@ -8,11 +8,11 @@ import org.springframework.stereotype.Service;
 /**
  * Event Handler for the Order Cancelled Event that the Reward Bounded Context is interested in
  */
-@Service
-@EnableKafka
+//@Service
+//@EnableKafka
 public class OrderCancelledEventHandler {
 
-    @KafkaListener(topics = "")
+    //@KafkaListener(topics = "")
     public void receive(OrderCancelledEvent event) {
     }
 }
