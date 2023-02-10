@@ -5,8 +5,7 @@ import com.poc.ecommerce.reward.domain.model.commands.RewardSendCommand;
 import com.poc.ecommerce.reward.domain.model.entities.Sticker;
 import com.poc.ecommerce.reward.domain.model.events.OrderCancelledEvent;
 import com.poc.ecommerce.reward.domain.model.events.StickerAccumulatedEvent;
-import com.poc.ecommerce.reward.domain.model.valueobjects.RewardStatistics;
-import com.poc.ecommerce.reward.domain.model.valueobjects.StickerStatistics;
+import com.poc.ecommerce.reward.domain.model.valueobjects.StickerHistory;
 import com.poc.ecommerce.reward.domain.model.valueobjects.StickerType;
 import com.poc.ecommerce.reward.domain.model.valueobjects.UserId;
 import lombok.Getter;
@@ -46,18 +45,18 @@ public class Reward extends AbstractAggregateRoot<Reward> {
     public void rewardSend(RewardSendCommand rewardSendCommand) {
         Sticker sticker = new Sticker(rewardSendCommand);
         this.addSticker(sticker);
-        this.registerEvent(new StickerAccumulatedEvent());
+        this.registerEvent(new StickerAccumulatedEvent(this));
     }
 
     public void cancel(String orderId) {
 
-        this.registerEvent(new OrderCancelledEvent());
+        this.registerEvent(new OrderCancelledEvent(this));
     }
 
-    public RewardStatistics historyInquiry() {
-        StickerStatistics normal = new StickerStatistics(StickerType.NORMAL, getStickerAmount(StickerType.NORMAL));
-        StickerStatistics mission = new StickerStatistics(StickerType.MISSION, getStickerAmount(StickerType.MISSION));
-        return new RewardStatistics(Arrays.asList(normal, mission));
+    public StickerHistory historyInquiry() {
+        StickerHistory.Item normal = new StickerHistory.Item(StickerType.NORMAL, getStickerAmount(StickerType.NORMAL));
+        StickerHistory.Item mission = new StickerHistory.Item(StickerType.MISSION, getStickerAmount(StickerType.MISSION));
+        return new StickerHistory(this.userId.getUserId(), Arrays.asList(normal, mission));
     }
 
     private long getStickerAmount(StickerType type) {

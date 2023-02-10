@@ -13,6 +13,6 @@ import javax.persistence.Embeddable;
 @NoArgsConstructor
 public class UserId {
 
-    @Column(name = "user_id")
+    @Column(name = "user_id", nullable = false)
     private String userId;
 }

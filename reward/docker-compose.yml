@@ -22,6 +22,7 @@ services:
   app:
     depends_on:
       - mysqldb
+      - cache
     build: .
     restart: on-failure
     ports:

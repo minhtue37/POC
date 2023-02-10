@@ -15,6 +15,6 @@ import javax.persistence.Embeddable;
 @NoArgsConstructor
 public class OrderId {
 
-    @Column(name = "order_id")
+    @Column(name = "order_id", nullable = false)
     private String orderId;
 }
