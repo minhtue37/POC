@@ -1,6 +1,8 @@
 package com.poc.ecommerce.reward.application.internal.queryservices;
 
+import com.poc.ecommerce.reward.domain.model.aggregates.Reward;
 import com.poc.ecommerce.reward.domain.model.commands.RewardHistoryInquiryCommand;
+import com.poc.ecommerce.reward.domain.model.valueobjects.RewardStatistics;
 import com.poc.ecommerce.reward.infrastructure.repositories.RewardRepository;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,10 @@ public class RewardQueryService {
         this.rewardRepository = rewardRepository;
     }
 
-    public void historyInquiry(RewardHistoryInquiryCommand rewardHistoryInquiryCommand) {
+    public RewardStatistics historyInquiry(RewardHistoryInquiryCommand command) {
+        String userId = command.getUserId();
+        Reward reward = rewardRepository.findByUserId(userId)
+                .orElse(new Reward());
+        return reward.historyInquiry();
     }
 }

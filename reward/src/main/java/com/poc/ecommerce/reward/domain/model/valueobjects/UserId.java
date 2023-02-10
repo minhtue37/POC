@@ -1,10 +1,17 @@
 package com.poc.ecommerce.reward.domain.model.valueobjects;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 @Embeddable
-public class User {
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class UserId {
 
     @Column(name = "user_id")
     private String userId;
