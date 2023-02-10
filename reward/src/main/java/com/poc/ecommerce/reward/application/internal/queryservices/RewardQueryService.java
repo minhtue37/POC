@@ -6,6 +6,7 @@ import com.poc.ecommerce.reward.domain.model.commands.RewardHistoryInquiryComman
 import com.poc.ecommerce.reward.domain.model.valueobjects.StickerHistory;
 import com.poc.ecommerce.reward.infrastructure.repositories.RewardRepository;
 import com.poc.ecommerce.reward.infrastructure.repositories.StickerHistoryCachingRepository;
+import com.poc.ecommerce.reward.interfaces.rest.dtos.StickerHistoryResponse;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -21,7 +22,7 @@ public class RewardQueryService {
         this.stickerHistoryCachingRepository = stickerHistoryCachingRepository;
     }
 
-    public StickerHistory historyInquiry(RewardHistoryInquiryCommand command) {
+    public StickerHistoryResponse historyInquiry(RewardHistoryInquiryCommand command) {
         String userId = command.getUserId();
         StickerHistory stickerHistory = this.stickerHistoryCachingRepository.findById(userId)
                 .orElse(null);
@@ -31,6 +32,6 @@ public class RewardQueryService {
             stickerHistory = reward.historyInquiry();
             this.stickerHistoryCachingRepository.save(stickerHistory);
         }
-        return stickerHistory;
+        return new StickerHistoryResponse(stickerHistory);
     }
 }
