@@ -8,6 +8,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class StickerAccumulatedEvent {
+public class StickerDeductionEvent {
     private Reward reward;
 }

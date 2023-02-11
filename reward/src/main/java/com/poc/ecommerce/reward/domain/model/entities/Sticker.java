@@ -29,6 +29,7 @@ public class Sticker {
     private StickerAmount amount;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "type", nullable = false)
     private StickerType type; //Sticker Type of the Sticker
 
     public Sticker(RewardSendCommand rewardSendCommand) {
