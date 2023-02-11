@@ -6,7 +6,7 @@ import org.springframework.transaction.event.TransactionPhase;
 import org.springframework.transaction.event.TransactionalEventListener;
 
 @Component
-public class OrderCancelledEventHandler {
+public class StickerDeductEventHandler {
 
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
     public void receiveEvent(OrderCancelledEvent orderCancelledEvent) {

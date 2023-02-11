@@ -4,8 +4,14 @@ import com.poc.ecommerce.reward.domain.model.aggregates.Reward;
 import com.poc.ecommerce.reward.domain.model.commands.RewardCancelCommand;
 import com.poc.ecommerce.reward.domain.model.commands.RewardCommand;
 import com.poc.ecommerce.reward.domain.model.commands.RewardSendCommand;
+import com.poc.ecommerce.reward.domain.model.entities.Sticker;
 import com.poc.ecommerce.reward.infrastructure.repositories.RewardRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class RewardCommandService {
@@ -17,6 +23,14 @@ public class RewardCommandService {
     }
 
     public void cancel(RewardCancelCommand rewardCancelCommand) {
+        String userId = rewardCancelCommand.getUserId();
+        Reward reward = this.rewardRepository.findByUserId(userId).orElse(null);
+        if (reward == null) {
+            return;
+        }
+
+        reward.cancel(rewardCancelCommand);
+        this.rewardRepository.save(reward);
     }
 
     public void rewardSend(RewardSendCommand rewardSendCommand) {

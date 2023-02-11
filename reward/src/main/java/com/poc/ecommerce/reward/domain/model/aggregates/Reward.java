@@ -1,5 +1,6 @@
 package com.poc.ecommerce.reward.domain.model.aggregates;
 
+import com.poc.ecommerce.reward.domain.model.commands.RewardCancelCommand;
 import com.poc.ecommerce.reward.domain.model.commands.RewardCommand;
 import com.poc.ecommerce.reward.domain.model.commands.RewardSendCommand;
 import com.poc.ecommerce.reward.domain.model.entities.Sticker;
@@ -18,6 +19,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Getter
@@ -49,8 +51,11 @@ public class Reward extends AbstractAggregateRoot<Reward> {
         this.registerEvent(new StickerAccumulatedEvent());
     }
 
-    public void cancel(String orderId) {
-
+    public void cancel(RewardCancelCommand command) {
+        String orderId = command.getOrderId();
+        this.stickers = this.stickers.stream()
+                .filter(s -> !s.getOrderId().getOrderId().equals(orderId))
+                .collect(Collectors.toList());
         this.registerEvent(new OrderCancelledEvent());
     }
 
