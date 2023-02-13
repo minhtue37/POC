@@ -9,6 +9,4 @@ import lombok.Data;
 public class RewardSendRequest {
     private String userId;
     private String orderId;
-    private String sku;
-    private SKUType skuType;
 }

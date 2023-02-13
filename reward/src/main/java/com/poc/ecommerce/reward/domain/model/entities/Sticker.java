@@ -1,6 +1,5 @@
 package com.poc.ecommerce.reward.domain.model.entities;
 
-import com.poc.ecommerce.reward.domain.model.commands.RewardSendCommand;
 import com.poc.ecommerce.reward.domain.model.valueobjects.OrderId;
 import com.poc.ecommerce.reward.domain.model.valueobjects.StickerAmount;
 import com.poc.ecommerce.reward.domain.model.valueobjects.StickerType;
@@ -11,8 +10,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
-import static com.poc.ecommerce.reward.domain.model.valueobjects.StickerAmount.MISSION_STICKER_AMOUNT;
-import static com.poc.ecommerce.reward.domain.model.valueobjects.StickerAmount.NORMAL_STICKER_AMOUNT;
+import static com.poc.ecommerce.reward.domain.model.valueobjects.StickerAmount.MISSION_STICKER_PER_PRODUCT;
+import static com.poc.ecommerce.reward.domain.model.valueobjects.StickerAmount.NORMAL_STICKER_PER_PRODUCT;
 
 @Entity
 @Getter
@@ -35,13 +34,14 @@ public class Sticker {
     @Column(name = "type", nullable = false)
     private StickerType type; //Sticker Type of the Sticker
 
-    public Sticker(RewardSendCommand rewardSendCommand) {
-        this.orderId = new OrderId(rewardSendCommand.getOrderId());
-        this.type = rewardSendCommand.getSkuType() == SKUType.NORMAL ? StickerType.NORMAL : StickerType.MISSION;
-        this.calculateStickerAmount();
+    public Sticker(String orderId, SKUType skuType, Long amount) {
+        this.orderId = new OrderId(orderId);
+        this.type = skuType == SKUType.NORMAL ? StickerType.NORMAL : StickerType.MISSION;
+        this.calculateStickerAmount(amount);
     }
 
-    public void calculateStickerAmount() {
-        this.amount = type == StickerType.NORMAL ? new StickerAmount(NORMAL_STICKER_AMOUNT) : new StickerAmount(MISSION_STICKER_AMOUNT);
+    public void calculateStickerAmount(Long amount) {
+        this.amount = type == StickerType.NORMAL ?
+                new StickerAmount(NORMAL_STICKER_PER_PRODUCT * amount) : new StickerAmount(MISSION_STICKER_PER_PRODUCT * amount);
     }
 }

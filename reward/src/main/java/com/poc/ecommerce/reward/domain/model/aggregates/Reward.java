@@ -45,8 +45,10 @@ public class Reward extends AbstractAggregateRoot<Reward> {
     }
 
     public void rewardSend(RewardSendCommand rewardSendCommand) {
-        Sticker sticker = new Sticker(rewardSendCommand);
-        this.addSticker(sticker);
+        List<Sticker> stickers = rewardSendCommand.getRewardSendDetails().stream().
+                map(item -> new Sticker(rewardSendCommand.getOrderId(), item.getSkuType(), item.getAmount())).
+                collect(Collectors.toList());
+        this.addStickers(stickers);
         this.registerEvent(new StickerAccumulatedEvent(this));
     }
 
@@ -73,7 +75,7 @@ public class Reward extends AbstractAggregateRoot<Reward> {
                 .sum();
     }
 
-    private void addSticker(Sticker sticker) {
-        this.stickers.add(sticker);
+    private void addStickers(List<Sticker> stickers) {
+        this.stickers.addAll(stickers);
     }
 }
