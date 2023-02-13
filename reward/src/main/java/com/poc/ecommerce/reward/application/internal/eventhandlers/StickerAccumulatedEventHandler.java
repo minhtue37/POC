@@ -16,6 +16,11 @@ public class StickerAccumulatedEventHandler {
         this.stickerHistoryCachingRepository = stickerHistoryCachingRepository;
     }
 
+    /**
+     * Receive sticker accumulated event then update sticker history cache
+     *
+     * @param event sticker accumulated event
+     */
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
     public void receiveEvent(StickerAccumulatedEvent event) {
         Reward reward = event.getReward();

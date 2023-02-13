@@ -16,6 +16,11 @@ public class StickerDeductionEventHandler {
         this.stickerHistoryCachingRepository = stickerHistoryCachingRepository;
     }
 
+    /**
+     * Receive sticker deduction event then update sticker history cache
+     *
+     * @param event sticker deduction event
+     */
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
     public void receiveEvent(StickerDeductionEvent event) {
         Reward reward = event.getReward();

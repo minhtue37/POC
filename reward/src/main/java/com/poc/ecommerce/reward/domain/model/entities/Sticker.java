@@ -11,6 +11,9 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+import static com.poc.ecommerce.reward.domain.model.valueobjects.StickerAmount.MISSION_STICKER_AMOUNT;
+import static com.poc.ecommerce.reward.domain.model.valueobjects.StickerAmount.NORMAL_STICKER_AMOUNT;
+
 @Entity
 @Getter
 @NoArgsConstructor
@@ -39,6 +42,6 @@ public class Sticker {
     }
 
     public void calculateStickerAmount() {
-        this.amount = type == StickerType.NORMAL ? new StickerAmount(1L) : new StickerAmount(2L);
+        this.amount = type == StickerType.NORMAL ? new StickerAmount(NORMAL_STICKER_AMOUNT) : new StickerAmount(MISSION_STICKER_AMOUNT);
     }
 }

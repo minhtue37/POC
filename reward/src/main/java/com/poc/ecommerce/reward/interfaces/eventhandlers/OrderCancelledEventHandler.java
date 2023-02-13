@@ -22,11 +22,16 @@ public class OrderCancelledEventHandler {
         this.rewardCommandService = rewardCommandService;
     }
 
+    /**
+     * Receive and handle order cancelled event
+     *
+     * @param message order cancelled event
+     */
     @KafkaListener(topics = "${cancel-order.topic}")
     public void receive(String message) {
         log.info("msg: {}", message);
         ObjectMapper objectMapper = new ObjectMapper();
-        OrderCancelledEvent event = null;
+        OrderCancelledEvent event;
         try {
             event = objectMapper.readValue(message, OrderCancelledEvent.class);
         } catch (JsonProcessingException e) {

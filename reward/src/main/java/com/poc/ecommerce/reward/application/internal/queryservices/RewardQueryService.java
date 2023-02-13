@@ -22,6 +22,13 @@ public class RewardQueryService {
         this.stickerHistoryCachingRepository = stickerHistoryCachingRepository;
     }
 
+    /**
+     * Inquiry sticker history.<br>
+     * Query from cache first. If not exist then query from database and update in cache.
+     *
+     * @param command reward history inquiry command
+     * @return StickerHistoryResponse sticker history response
+     */
     public StickerHistoryResponse historyInquiry(RewardHistoryInquiryCommand command) {
         String userId = command.getUserId();
         StickerHistory stickerHistory = this.stickerHistoryCachingRepository.findById(userId)

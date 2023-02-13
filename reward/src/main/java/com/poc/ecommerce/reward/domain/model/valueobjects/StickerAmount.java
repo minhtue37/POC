@@ -14,6 +14,8 @@ import javax.persistence.Embeddable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class StickerAmount {
+    public static final Long NORMAL_STICKER_AMOUNT = 1L;
+    public static final Long MISSION_STICKER_AMOUNT = 2L;
 
     @Column(name = "amount")
     private Long amount;

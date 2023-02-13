@@ -30,6 +30,12 @@ public class RewardController {
         this.rewardQueryService = rewardQueryService;
     }
 
+    /**
+     * Send reward for user based on order data
+     *
+     * @param request reward send request
+     * @return
+     */
     @PostMapping("/reward-send")
     @Operation(summary = "Save sticker",
             tags = {"Reward Controller"})
@@ -43,6 +49,12 @@ public class RewardController {
                 .build();
     }
 
+    /**
+     * Inquiry sticker history based on userId
+     *
+     * @param userId userId
+     * @return
+     */
     @GetMapping("/history-inquiry")
     @Operation(summary = "Get sticker history",
             tags = {"Reward Controller"})
