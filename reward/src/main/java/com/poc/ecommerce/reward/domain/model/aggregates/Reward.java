@@ -54,9 +54,11 @@ public class Reward extends AbstractAggregateRoot<Reward> {
 
     public void cancel(RewardCancelCommand command) {
         String orderId = command.getOrderId();
-        this.stickers = this.stickers.stream()
+        List<Sticker> remainStickers = this.stickers.stream()
                 .filter(s -> !s.getOrderId().getOrderId().equals(orderId))
                 .collect(Collectors.toList());
+        this.stickers.clear();
+        this.stickers.addAll(remainStickers);
 
         this.registerEvent(new StickerDeductionEvent(this));
     }
