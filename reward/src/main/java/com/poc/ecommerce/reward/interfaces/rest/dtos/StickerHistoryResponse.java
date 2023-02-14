@@ -1,6 +1,6 @@
 package com.poc.ecommerce.reward.interfaces.rest.dtos;
 
-import com.poc.ecommerce.reward.domain.model.valueobjects.StickerHistory;
+import com.poc.ecommerce.shareddomain.model.StickerHistory;
 import com.poc.ecommerce.reward.domain.model.valueobjects.StickerType;
 import lombok.Getter;
 

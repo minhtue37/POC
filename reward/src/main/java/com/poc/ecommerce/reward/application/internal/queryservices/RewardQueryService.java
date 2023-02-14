@@ -3,8 +3,8 @@ package com.poc.ecommerce.reward.application.internal.queryservices;
 import com.poc.ecommerce.reward.domain.model.aggregates.Reward;
 import com.poc.ecommerce.reward.domain.model.commands.RewardCommand;
 import com.poc.ecommerce.reward.domain.model.commands.RewardHistoryInquiryCommand;
-import com.poc.ecommerce.reward.domain.model.valueobjects.StickerHistory;
-import com.poc.ecommerce.reward.infrastructure.repositories.RewardRepository;
+import com.poc.ecommerce.reward.infrastructure.repositories.RewardRepositoryImpl;
+import com.poc.ecommerce.shareddomain.model.StickerHistory;
 import com.poc.ecommerce.reward.infrastructure.repositories.StickerHistoryCachingRepository;
 import com.poc.ecommerce.reward.interfaces.rest.dtos.StickerHistoryResponse;
 import org.springframework.stereotype.Service;
@@ -12,11 +12,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class RewardQueryService {
 
-    private final RewardRepository rewardRepository;
+    private final RewardRepositoryImpl rewardRepository;
 
     private final StickerHistoryCachingRepository stickerHistoryCachingRepository;
 
-    public RewardQueryService(RewardRepository rewardRepository,
+    public RewardQueryService(RewardRepositoryImpl rewardRepository,
                               StickerHistoryCachingRepository stickerHistoryCachingRepository) {
         this.rewardRepository = rewardRepository;
         this.stickerHistoryCachingRepository = stickerHistoryCachingRepository;
@@ -36,7 +36,7 @@ public class RewardQueryService {
         if (stickerHistory == null) {
             Reward reward = this.rewardRepository.findByUserId(userId)
                     .orElse(new Reward(new RewardCommand(userId)));
-            stickerHistory = reward.historyInquiry();
+            stickerHistory = new StickerHistory(reward);
             this.stickerHistoryCachingRepository.save(stickerHistory);
         }
         return new StickerHistoryResponse(stickerHistory);

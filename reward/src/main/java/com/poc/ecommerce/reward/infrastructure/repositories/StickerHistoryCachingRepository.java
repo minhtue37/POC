@@ -1,6 +1,6 @@
 package com.poc.ecommerce.reward.infrastructure.repositories;
 
-import com.poc.ecommerce.reward.domain.model.valueobjects.StickerHistory;
+import com.poc.ecommerce.shareddomain.model.StickerHistory;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

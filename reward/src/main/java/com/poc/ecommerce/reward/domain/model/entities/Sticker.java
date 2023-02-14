@@ -6,7 +6,6 @@ import com.poc.ecommerce.reward.domain.model.valueobjects.StickerType;
 import com.poc.ecommerce.reward.interfaces.rest.dtos.SKUType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.*;
 
@@ -20,11 +19,9 @@ public class Sticker {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Setter
     private Long id;
 
     @Embedded
-    @Setter
     private OrderId orderId;
 
     @Embedded
