@@ -30,7 +30,6 @@ public class RewardSendCommand {
         this.rewardSendDetails = reward.entrySet().stream().map(e -> new RewardSendDetail(e.getKey(), e.getValue())).collect(Collectors.toList());
     }
 
-
     @AllArgsConstructor
     @Data
     public static class RewardSendDetail {

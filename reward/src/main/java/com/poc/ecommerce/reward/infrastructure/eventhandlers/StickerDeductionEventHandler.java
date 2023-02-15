@@ -25,6 +25,10 @@ public class StickerDeductionEventHandler {
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
     public void receiveEvent(StickerDeductionEvent event) {
         Reward reward = event.getReward();
-        this.stickerHistoryCachingRepository.save(new StickerHistory(reward));
+        boolean isCached = this.stickerHistoryCachingRepository.existsById(reward.getUserId().getUserId());
+        // just update the cache when it is retrieved before
+        if (isCached) {
+            this.stickerHistoryCachingRepository.save(new StickerHistory(reward));
+        }
     }
 }
