@@ -29,14 +29,31 @@ public class StickerDeductionEventHandlerTest {
     private StickerHistoryCachingRepository stickerHistoryCachingRepository;
 
     @Test
-    public void testReceiveEvent() throws NoSuchFieldException, IllegalAccessException {
+    public void testReceiveEvent_hasNotCacheBefore() throws NoSuchFieldException, IllegalAccessException {
         Reward reward = new Reward();
         Field user = reward.getClass().getDeclaredField("userId");
         user.setAccessible(true);
         UserId userObj = new UserId("user_a");
         user.set(reward, userObj);
+        Mockito.when(stickerHistoryCachingRepository.existsById(Mockito.any())).thenReturn(false);
 
         stickerDeductionEventHandler.receiveEvent(new StickerDeductionEvent(reward));
+        verify(stickerHistoryCachingRepository, VerificationModeFactory.times(1)).existsById(Mockito.any());
+        verify(stickerHistoryCachingRepository, VerificationModeFactory.times(0)).save(Mockito.any());
+        reset(stickerHistoryCachingRepository);
+    }
+
+    @Test
+    public void testReceiveEvent_hasCacheBefore() throws NoSuchFieldException, IllegalAccessException {
+        Reward reward = new Reward();
+        Field user = reward.getClass().getDeclaredField("userId");
+        user.setAccessible(true);
+        UserId userObj = new UserId("user_a");
+        user.set(reward, userObj);
+        Mockito.when(stickerHistoryCachingRepository.existsById(Mockito.any())).thenReturn(true);
+
+        stickerDeductionEventHandler.receiveEvent(new StickerDeductionEvent(reward));
+        verify(stickerHistoryCachingRepository, VerificationModeFactory.times(1)).existsById(Mockito.any());
         verify(stickerHistoryCachingRepository, VerificationModeFactory.times(1)).save(Mockito.any());
         reset(stickerHistoryCachingRepository);
     }
