@@ -7,8 +7,10 @@ import com.poc.ecommerce.reward.domain.model.commands.RewardSendCommand;
 import com.poc.ecommerce.reward.domain.model.repository.RewardRepository;
 import com.poc.ecommerce.reward.domain.model.valueobjects.UserId;
 import com.poc.ecommerce.reward.interfaces.rest.dtos.RewardSendRequest;
+import com.poc.ecommerce.reward.interfaces.rest.dtos.SKUType;
 import com.poc.ecommerce.shareddomain.events.OrderCancelledEvent;
 import com.poc.ecommerce.shareddomain.model.OrderDetail;
+import com.poc.ecommerce.shareddomain.model.OrderItem;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,6 +22,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.lang.reflect.Field;
+import java.util.Arrays;
 import java.util.Optional;
 
 import static org.mockito.Mockito.reset;
@@ -28,6 +31,7 @@ import static org.mockito.Mockito.verify;
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = {RewardCommandService.class})
 public class RewardCommandServiceTest {
+    public static final String SKU1 = "XYZ12345";
     private static final String USER_A = "user_a";
     private static final String USER_B = "user_b";
     private static final String ORDER_1 = "order_1";
@@ -52,10 +56,12 @@ public class RewardCommandServiceTest {
 
     @Before
     public void setUp() throws NoSuchFieldException, IllegalAccessException {
+        OrderDetail orderDetail = OrderDetail.builder().userId(USER_A).orderId(ORDER_1).
+                orderItems(Arrays.asList(OrderItem.builder().sku(SKU1).type(SKUType.NORMAL).amount(1l).build())).
+                build();
         Mockito.when(rewardRepository.findByUserId(USER_A)).thenReturn(mockReward(USER_A));
         Mockito.when(rewardRepository.findByUserId(USER_B)).thenReturn(Optional.ofNullable(null));
-        Mockito.when(externalOrderDetailService.getOrderDetail(Mockito.any())).thenReturn(OrderDetail.builder().
-                orderItems(Mockito.anyList()).build());
+        Mockito.when(externalOrderDetailService.getOrderDetail(Mockito.any())).thenReturn(orderDetail);
     }
 
     @Test
