@@ -2,11 +2,11 @@ package com.poc.ecommerce.reward.infrastructure.repositories;
 
 import com.poc.ecommerce.reward.domain.model.aggregates.Reward;
 import com.poc.ecommerce.reward.domain.model.repository.RewardRepository;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
-@Service
+@Component
 public class RewardRepositoryImpl implements RewardRepository {
 
     private final RewardJPARepository rewardJPARepository;
