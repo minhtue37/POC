@@ -61,7 +61,7 @@ public class RewardQueryServiceTest {
         Reward reward = new Reward();
         Field user = reward.getClass().getDeclaredField("userId");
         user.setAccessible(true);
-        UserId userObj = new UserId(USER_B);
+        UserId userObj = new UserId(userId);
         user.set(reward, userObj);
         return Optional.of(reward);
     }

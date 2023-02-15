@@ -46,9 +46,7 @@ public class RewardControllerTest {
 
     @Test
     public void testRewardSend_withBody() throws Exception {
-        RewardSendRequest request = new RewardSendRequest();
-        request.setUserId("user_a");
-        request.setOrderId("order_1");
+        RewardSendRequest request = RewardSendRequest.builder().userId("user_a").orderId("order_1").build();
         ObjectMapper objectMapper = new ObjectMapper();
         String payload = objectMapper.writeValueAsString(request);
         mvc.perform(post("/reward/reward-send").contentType(MediaType.APPLICATION_JSON).content(payload)).
@@ -74,7 +72,7 @@ public class RewardControllerTest {
                 andExpect(jsonPath("$.sum", is(1))).
                 andExpect(jsonPath("$.items", hasSize(equalTo(1)))).
                 andExpect(jsonPath("$.items[0].type", is("NORMAL"))).
-                andExpect(jsonPath("$.items[0].amount", is(1)));;
+                andExpect(jsonPath("$.items[0].amount", is(1)));
         verify(rewardQueryService, VerificationModeFactory.times(1)).historyInquiry(Mockito.any());
         reset(rewardQueryService);
     }
