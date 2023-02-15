@@ -121,6 +121,7 @@
                     <excludes>
                         <exclude>**/SKUType.class</exclude>
                         <exclude>**/configurations/*</exclude>
+                        <exclude>**/outboundservices/acl/*</exclude>
                     </excludes>
                 </configuration>
                 <executions>
