@@ -2,18 +2,17 @@ package com.poc.ecommerce.shareddomain.model;
 
 import com.poc.ecommerce.reward.domain.model.aggregates.Reward;
 import com.poc.ecommerce.reward.domain.model.valueobjects.StickerType;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.redis.core.RedisHash;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+@Builder
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 @RedisHash("StickerHistory")
 public class StickerHistory {
     private String id;
@@ -31,6 +30,7 @@ public class StickerHistory {
                 .sum();
     }
 
+    @Builder
     @Getter
     @Setter
     @AllArgsConstructor

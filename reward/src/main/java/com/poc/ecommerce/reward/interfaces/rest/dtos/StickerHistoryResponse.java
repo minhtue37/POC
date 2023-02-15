@@ -1,12 +1,16 @@
 package com.poc.ecommerce.reward.interfaces.rest.dtos;
 
-import com.poc.ecommerce.shareddomain.model.StickerHistory;
 import com.poc.ecommerce.reward.domain.model.valueobjects.StickerType;
+import com.poc.ecommerce.shareddomain.model.StickerHistory;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Builder
+@AllArgsConstructor
 @Getter
 public class StickerHistoryResponse {
     private Long sum;
@@ -23,6 +27,8 @@ public class StickerHistoryResponse {
                 .sum();
     }
 
+    @Builder
+    @AllArgsConstructor
     @Getter
     public static class Item {
         private StickerType type;
