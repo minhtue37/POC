@@ -3,20 +3,20 @@ package com.poc.ecommerce.reward.application.internal.queryservices;
 import com.poc.ecommerce.reward.domain.model.aggregates.Reward;
 import com.poc.ecommerce.reward.domain.model.commands.RewardCommand;
 import com.poc.ecommerce.reward.domain.model.commands.RewardHistoryInquiryCommand;
-import com.poc.ecommerce.reward.infrastructure.repositories.RewardRepositoryImpl;
-import com.poc.ecommerce.shareddomain.model.StickerHistory;
+import com.poc.ecommerce.reward.domain.model.repository.RewardRepository;
 import com.poc.ecommerce.reward.infrastructure.repositories.StickerHistoryCachingRepository;
 import com.poc.ecommerce.reward.interfaces.rest.dtos.StickerHistoryResponse;
+import com.poc.ecommerce.shareddomain.model.StickerHistory;
 import org.springframework.stereotype.Service;
 
 @Service
 public class RewardQueryService {
 
-    private final RewardRepositoryImpl rewardRepository;
+    private final RewardRepository rewardRepository;
 
     private final StickerHistoryCachingRepository stickerHistoryCachingRepository;
 
-    public RewardQueryService(RewardRepositoryImpl rewardRepository,
+    public RewardQueryService(RewardRepository rewardRepository,
                               StickerHistoryCachingRepository stickerHistoryCachingRepository) {
         this.rewardRepository = rewardRepository;
         this.stickerHistoryCachingRepository = stickerHistoryCachingRepository;
